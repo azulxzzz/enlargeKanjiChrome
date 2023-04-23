@@ -5,9 +5,26 @@ function enlargeKanji() {
     for (let i = 0; i < kanjiElements.length; i++) {
       const element = kanjiElements[i];
       if (element.innerText.match(kanjiRegex)) { // check if the element contains any Kanji characters
-        const style = window.getComputedStyle(element);
-        const fontSize = parseInt(style.fontSize);
-        element.style.fontSize = (fontSize * 1.5) + 'px'; // increase the font size by 150%
+        const childNodes = element.childNodes;
+        for (let j = 0; j < childNodes.length; j++) {
+          const node = childNodes[j];
+          if (node.nodeType === Node.TEXT_NODE) { // check if the node is a text node
+            const text = node.textContent;
+            const newNode = document.createDocumentFragment();
+            let lastIndex = 0;
+            let match;
+            while ((match = kanjiRegex.exec(text)) !== null) { // loop through each Kanji character
+              const span = document.createElement('span');
+              span.textContent = match[0];
+              span.style.fontSize = '150%';
+              newNode.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+              newNode.appendChild(span);
+              lastIndex = kanjiRegex.lastIndex;
+            }
+            newNode.appendChild(document.createTextNode(text.slice(lastIndex)));
+            node.parentNode.replaceChild(newNode, node); // replace the original text node with the new nodes
+          }
+        }
       }
     }
   }
