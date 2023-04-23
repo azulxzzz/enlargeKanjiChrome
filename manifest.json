@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "Kanji Enlarger",
+    "version": "1.0",
+    "description": "Enlarges all the Kanji on a webpage",
+    "permissions": ["activeTab"],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "js": ["content.js"]
+        }
+      ]
+  }
+  
