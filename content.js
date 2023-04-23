@@ -1,6 +1,6 @@
 console.log('content loaded');
 function enlargeKanji() {
-    const kanjiElements = document.querySelectorAll('span, div, p, h1, h2, h3, h4, h5, h6, li');
+    const kanjiElements = document.querySelectorAll('span, div, p, h1, h2, h3, h4, h5, h6, li, a');
     const kanjiRegex = new RegExp('[\u4e00-\u9faf]+', 'g'); // regex for Kanji characters
     for (let i = 0; i < kanjiElements.length; i++) {
       const element = kanjiElements[i];
@@ -16,7 +16,10 @@ function enlargeKanji() {
             while ((match = kanjiRegex.exec(text)) !== null) { // loop through each Kanji character
               const span = document.createElement('span');
               span.textContent = match[0];
-              span.style.fontSize = '150%';
+              span.style.display = 'inline-block';
+              span.style.transform = 'scale(1.5)';
+              span.style.transformOrigin = '0 0';
+              span.style.width = (match[0].length * 1.5) + 'em'; // set the width based on the scaled font size
               newNode.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
               newNode.appendChild(span);
               lastIndex = kanjiRegex.lastIndex;
@@ -28,6 +31,7 @@ function enlargeKanji() {
       }
     }
   }
+  
   
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     console.log('message received');
