@@ -1,6 +1,6 @@
 # Kanji Enlarger Chrome Extension (Deprecated)
 
-##I'm not maintaining this anymore
+## I'm not maintaining this anymore
 
 ## Description
 
